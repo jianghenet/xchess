@@ -218,3 +218,22 @@ XiangqiTeller.pieceCreatFactory = (map, id) => {
   let position = XiangqiTeller.getRowCol(map, id);
   return new XiangqiPiece(id, position.row, position.col);
 }
+
+XiangqiTeller.piecesCount = (map, color)=>{
+  let counter = 0;
+  for (let row = 0; row < 5; row++) {/** 棋盘只有10行 */
+    let row1 = 2 * row;
+    let row2 = 2 * row + 1;
+    for (let col = 0; col < 9; col++) {/** 棋盘只有9列 */
+      let p1 = XiangqiRules.piecesHash[XiangqiRules.piecesSets[map[row1][col]]];
+      if(p1 && p1.color == color){
+        counter++;
+      }
+      let p2 = XiangqiRules.piecesHash[XiangqiRules.piecesSets[map[row2][col]]];
+      if(p2 && p2.color == color){
+        counter++;
+      }
+    }
+  }
+  return counter;
+}
