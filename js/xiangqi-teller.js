@@ -80,7 +80,7 @@ XiangqiTeller.getPiece = (situation, id) => {
 }
 
 XiangqiTeller.getPosition = (map, id) => {
-  for (let row = 0; row < map.length; row++) {/** 棋盘只有10行 */
+  for (let row = 0; row < 5; row++) {/** 棋盘只有10行 */
     let row1 = 2 * row;
     let row2 = 2 * row + 1;
     for (let col = 0; col < 9; col++) {/** 棋盘只有9列 */
@@ -103,7 +103,7 @@ XiangqiTeller.getRowCol = (map, id) => {
   if(!id){
     return null;
   }
-  for (let row = 0; row < map.length; row++) {/** 棋盘只有10行 */
+  for (let row = 0; row < 5; row++) {/** 棋盘只有10行 */
     let row1 = 2 * row;
     let row2 = 2 * row + 1;
     for (let col = 0; col < 9; col++) {/** 棋盘只有9列 */
