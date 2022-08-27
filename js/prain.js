@@ -16,6 +16,15 @@ function getAlphaBeta(aValue, bValue, depth, map ,my) {
 
   //根据棋盘情况，获取可用棋子的走法;
   var moves = AI.getMoves(map, my);
+  for (var i=0; i < moves.length; i++) {
+    var move = moves[i];
+    let mapCopy = DeepClone(map)
+    mapCopy[ move.newY ][ move.newX ] = move.key;
+    mapCopy[ move.oldY ][ move.oldX ] = null;
+    move.value = XiangqiTeller.evaluate(mapCopy, my)
+  }
+
+  moves = moves.sort((a,b) => b.value - a.value).slice(0, 10)
 
   //这里排序以后会增加效率
   for (var i=0; i < moves.length; i++) {

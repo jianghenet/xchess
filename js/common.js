@@ -14,7 +14,7 @@ com.init = function (stype) {
   com.pointStartY = stype.pointStartY; //第一个着点Y坐标;
   com.page = stype.page;   //图片目录
 
-  com.canvas = document.getElementById("chess"); //画布
+  com.canvas = jLibr.getEle("chess"); //画布
   com.ct = com.canvas.getContext("2d");
   com.canvas.width = com.width;
   com.canvas.height = com.height;
@@ -51,116 +51,6 @@ com.stype = {
     page: "stype_3" //图片目录
   }
 }
-//获取ID
-com.getEle = function (id) {
-  return document.getElementById(id)
-}
-
-window.onload = function () {
-  com.bg = new com.class.Bg();
-  com.dot = new com.class.Dot();
-  com.pane = new com.class.Pane();
-  com.pane.isShow = false;
-
-  com.mans = {};  //棋子集合
-
-  //开始对弈
-  com.getEle("playBtn").addEventListener("click", function (e) {
-    play.isPlay = true;
-    var depth = parseInt(getRadioValue("depth"), 10) || 3;
-
-    play.init(depth, play.initMap);
-    com.getEle("chessBox").style.display = "block";
-    com.getEle("menuBox").style.display = "none";
-  })
-
-  //开始挑战
-  com.getEle("clasliBtn").addEventListener("click", function (e) {
-    play.isPlay = true;
-    var clasli = parseInt(getRadioValue("clasli"), 10) || 0;
-    play.init(4, com.clasli[clasli].map);
-    com.getEle("chessBox").style.display = "block";
-    com.getEle("menuBox").style.display = "none";
-  })
-
-  // 悔棋
-  com.getEle("regretBtn").addEventListener("click", function (e) {
-    play.regret();
-  })
-
-  //返回首页
-  com.getEle("gohomeBtn").addEventListener("click", function (e) {
-    com.getEle("chessBox").style.display = "none";
-    com.getEle("menuBox").style.display = "block";
-    com.getEle("indexBox").style.display = "block";
-    com.getEle("menuQj").style.display = "none";
-    com.getEle("menuDy").style.display = "none";
-  })
-
-  //返回
-  com.getEle("menuFh").addEventListener("click", function (e) {
-    com.getEle("indexBox").style.display = "block";
-    com.getEle("menuQj").style.display = "none";
-    com.getEle("menuDy").style.display = "none";
-  })
-
-  //返回关闭
-  com.getEle("menuGb").addEventListener("click", function (e) {
-    com.getEle("indexBox").style.display = "block";
-    com.getEle("menuQj").style.display = "none";
-    com.getEle("menuDy").style.display = "none";
-  })
-
-  //重新开始棋局
-  com.getEle("restartBtn").addEventListener("click", function (e) {
-    if (confirm("是否确定要重新开始？")) {
-      play.isPlay = true;
-      play.init(4, play.mapBackup);
-    }
-  })
-
-  //人机对弈
-  com.getEle("indexDy").addEventListener("click", function (e) {
-    com.getEle("indexBox").style.display = "none";
-    com.getEle("menuQj").style.display = "none";
-    com.getEle("menuDy").style.display = "block";
-  })
-
-  //挑战棋局
-  com.getEle("indexQj").addEventListener("click", function (e) {
-    com.getEle("indexBox").style.display = "none";
-    com.getEle("menuQj").style.display = "block";
-    com.getEle("menuDy").style.display = "none";
-  })
-
-  //换肤
-  com.getEle("stypeBtn").addEventListener("click", function (e) {
-    var stype = com.nowStype;
-    if (stype == "stype3") stype = "stype2";
-    else if (stype == "stype2") stype = "stype1";
-    else if (stype == "stype1") stype = "stype3";
-    com.init(stype);
-    com.show();
-
-    document.cookie = "stype=" + stype;
-    clearInterval(timer);
-    var i = 0;
-    var timer = setInterval(function () {
-      com.show();
-      if (i++ >= 5) clearInterval(timer);
-    }, 2000);
-  })
-
-  //获取单选框选择的值
-  function getRadioValue(name) {
-    var obj = document.getElementsByName(name);
-    for (var i = 0; i < obj.length; i++) {
-      if (obj[i].checked) {
-        return obj[i].value;
-      }
-    }
-  }
-}
 
 ChessImages = {}
 
@@ -186,7 +76,7 @@ com.loadImages = function (stype) {
   ChessImages.paneImg = new Image();
   ChessImages.paneImg.src = "img/" + stype + "/r_box.png";
 
-  document.getElementsByTagName("body")[0].style.background = "url(img/" + stype + "/bg.jpg)";
+  document.body.style.background = "url(img/" + stype + "/bg.jpg)";
 
 }
 
@@ -269,6 +159,103 @@ com.class.Dot = function (img, x, y) {
       }
     })
   }
+}
+
+
+window.onload = function () {
+  com.bg = new com.class.Bg();
+  com.dot = new com.class.Dot();
+  com.pane = new com.class.Pane();
+  com.pane.isShow = false;
+
+  com.mans = {};  //棋子集合
+
+  //开始对弈
+  jLibr.getEle("playBtn").addEventListener("click", function (e) {
+    play.isPlay = true;
+    var depth = parseInt(jLibr.getDepth(), 10) || 3;
+
+    play.init(depth, play.initMap);
+    jLibr.getEle("chessBox").style.display = "block";
+    jLibr.getEle("menuBox").style.display = "none";
+  })
+
+  //开始挑战
+  jLibr.getEle("clasliBtn").addEventListener("click", function (e) {
+    play.isPlay = true;
+    var clasli = parseInt(jLibr.getClasli(), 10) || 0;
+    play.init(4, com.clasli[clasli].map);
+    jLibr.getEle("chessBox").style.display = "block";
+    jLibr.getEle("menuBox").style.display = "none";
+  })
+
+  // 悔棋
+  jLibr.getEle("regretBtn").addEventListener("click", function (e) {
+    play.regret();
+  })
+
+  //返回首页
+  jLibr.getEle("gohomeBtn").addEventListener("click", function (e) {
+    jLibr.getEle("chessBox").style.display = "none";
+    jLibr.getEle("menuBox").style.display = "block";
+    jLibr.getEle("indexBox").style.display = "block";
+    jLibr.getEle("menuQj").style.display = "none";
+    jLibr.getEle("menuDy").style.display = "none";
+  })
+
+  //返回
+  jLibr.getEle("menuFh").addEventListener("click", function (e) {
+    jLibr.getEle("indexBox").style.display = "block";
+    jLibr.getEle("menuQj").style.display = "none";
+    jLibr.getEle("menuDy").style.display = "none";
+  })
+
+  //返回关闭
+  jLibr.getEle("menuGb").addEventListener("click", function (e) {
+    jLibr.getEle("indexBox").style.display = "block";
+    jLibr.getEle("menuQj").style.display = "none";
+    jLibr.getEle("menuDy").style.display = "none";
+  })
+
+  //重新开始棋局
+  jLibr.getEle("restartBtn").addEventListener("click", function (e) {
+    if (confirm("是否确定要重新开始？")) {
+      play.isPlay = true;
+      play.init(4, play.mapBackup);
+    }
+  })
+
+  //人机对弈
+  jLibr.getEle("indexDy").addEventListener("click", function (e) {
+    jLibr.getEle("indexBox").style.display = "none";
+    jLibr.getEle("menuQj").style.display = "none";
+    jLibr.getEle("menuDy").style.display = "block";
+  })
+
+  //挑战棋局
+  jLibr.getEle("indexQj").addEventListener("click", function (e) {
+    jLibr.getEle("indexBox").style.display = "none";
+    jLibr.getEle("menuQj").style.display = "block";
+    jLibr.getEle("menuDy").style.display = "none";
+  })
+
+  //换肤
+  jLibr.getEle("stypeBtn").addEventListener("click", function (e) {
+    var stype = com.nowStype;
+    if (stype == "stype3") stype = "stype2";
+    else if (stype == "stype2") stype = "stype1";
+    else if (stype == "stype1") stype = "stype3";
+    com.init(stype);
+    com.show();
+
+    document.cookie = "stype=" + stype;
+    clearInterval(timer);
+    var i = 0;
+    var timer = setInterval(function () {
+      com.show();
+      if (i++ >= 5) clearInterval(timer);
+    }, 2000);
+  })
 }
 
 com.init();

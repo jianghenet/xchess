@@ -3,9 +3,9 @@
 var AI = AI||{};
 
 //人工智能初始化
-AI.init = function(){
+AI.getGoodMove = function(){
   //人工智能开始运作
-  var initTime = new Date().getTime();
+  var startedTime = new Date().getTime();
   AI.treeDepth=play.depth;
   AI.number=0;
 
@@ -19,7 +19,7 @@ AI.init = function(){
                 ' 搜索深度：'+AI.treeDepth +
                 ' 搜索分支：'+ AI.number + '个' +
                 ' 最佳着法评估：'+ val.value + '分'+
-                ' 搜索用时：'+ (nowTime-initTime) + '毫秒')
+                ' 搜索用时：'+ (nowTime-startedTime) + '毫秒')
     return [piece.x,piece.y,val.x,val.y]
   }else {
     return null;

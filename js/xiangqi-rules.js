@@ -2,25 +2,6 @@
 XiangqiRules = {
 }
 
-/**大写为黑，小写为红方*/
-XiangqiRules.piecesSets = {
-  "c0": "c", "c1": "c",
-  "m0": "m", "m1": "m",
-  "x0": "x", "x1": "x",
-  "s0": "s", "s1": "s",
-  "j0": "j",
-  "p0": "p", "p1": "p",
-  "z0": "z", "z1": "z", "z2": "z", "z3": "z", "z4": "z", "z5": "z",
-
-  "C0": "C", "C1": "C",
-  "M0": "M", "M1": "M",
-  "X0": "X", "X1": "X",
-  "S0": "S", "S1": "S",
-  "J0": "J",
-  "P0": "P", "P1": "P",
-  "Z0": "Z", "Z1": "Z", "Z2": "Z", "Z3": "Z", "Z4": "Z", "Z5": "Z",
-}
-
 //棋子配置
 XiangqiRules.piecesHash = {
   //红子 中文/图片地址/阵营/权重
@@ -41,6 +22,33 @@ XiangqiRules.piecesHash = {
   'P': { label: "炮", img: 'b_p', color: -1, wayId: "p", valueId: "P" },
   'Z': { label: "卒", img: 'b_z', color: -1, wayId: "z", valueId: "Z" }
 };
+
+/**大写为黑，小写为红方*/
+XiangqiRules.piecesSets = {
+  "c0": "c", "c1": "c",
+  "m0": "m", "m1": "m",
+  "x0": "x", "x1": "x",
+  "s0": "s", "s1": "s",
+  "j0": "j",
+  "p0": "p", "p1": "p",
+  "z0": "z", "z1": "z", "z2": "z", "z3": "z", "z4": "z", "z5": "z",
+
+  "C0": "C", "C1": "C",
+  "M0": "M", "M1": "M",
+  "X0": "X", "X1": "X",
+  "S0": "S", "S1": "S",
+  "J0": "J",
+  "P0": "P", "P1": "P",
+  "Z0": "Z", "Z1": "Z", "Z2": "Z", "Z3": "Z", "Z4": "Z", "Z5": "Z",
+}
+
+XiangqiRules.piecesBoard = (()=>{
+  let pboard = {};
+  for(id in XiangqiRules.piecesSets){
+    pboard[id] = XiangqiRules.piecesHash[XiangqiRules.piecesSets[id]];
+  }
+  return pboard;
+})();
 
 //棋子能走的着点,走法
 XiangqiRules.ways = {}

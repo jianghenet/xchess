@@ -1,9 +1,9 @@
 
 /**
  * @attr
- *  id: "c0"; map中棋子的唯一标识；用于找name和价值；
- *  name: "c"; 棋子的名字;用户寻找着法；
- *  label: "车"
+ *  id: "c0"; map中棋子的唯一标识；
+ *  name: "c"; 棋子的名字;
+ *  label: "车"; 棋子的文字；
  *  color: 1; 1红方, -1黑方
  */
 class XiangqiPiece {
@@ -18,7 +18,7 @@ class XiangqiPiece {
     this.y = row;
 
     this.name = XiangqiRules.piecesSets[id];
-    let piece = XiangqiRules.piecesHash[this.name];
+    let piece = XiangqiRules.piecesBoard[id];
     this.label = piece.label;
     this.img = piece.img;
     this.color = piece.color;
@@ -47,6 +47,9 @@ class XiangqiPiece {
     return value * this.color;
   }
 
+  /* 判断着法是否符合棋子的走法规则
+   * 判断将要落子的坐标是否在所有可以落子的坐标中。
+   */
   isInDots(map, x, y){
     let validDots = XiangqiRules.ways[this.wayId](this, map);
     return validDots.some((ps_i) => ps_i[0] == x && ps_i[1] == y);
@@ -62,22 +65,7 @@ class XiangqiPiece {
   }
 }
 
-XiangqiBoard = {
-
-}
-
 XiangqiTeller = {}
-
-//id是棋子在棋盘上的唯一标识
-XiangqiTeller.getPiece = (situation, id) => {
-  for (let x = 0; x < situation.length; x++) {
-    for (let y = 0; y < situation[x].length; y++) {
-      if (situation[x][y] && situation[x][y].id == id) {
-        return situation[x][y];
-      }
-    }
-  }
-}
 
 XiangqiTeller.getPosition = (map, id) => {
   for (let row = 0; row < 5; row++) {/** 棋盘只有10行 */
@@ -119,8 +107,7 @@ XiangqiTeller.getRowCol = (map, id) => {
 }
 
 XiangqiTeller.getPiceColor = (id) => {
-  let name = XiangqiRules.piecesSets[id];
-  return XiangqiRules.piecesHash[name].color;
+  return XiangqiRules.piecesBoard[id].color;
 }
 
 //把坐标生成着法
@@ -209,8 +196,7 @@ XiangqiTeller.getAvailableMoves = (id, map) => {
 }
 
 XiangqiTeller.getValuesById = (id) => {
-  let name = XiangqiRules.piecesSets[id];
-  let piece = XiangqiRules.piecesHash[name];
+  let piece = XiangqiRules.piecesBoard[id];
   return XiangqiRules.RelativeValues[piece.valueId];
 }
 
@@ -225,11 +211,12 @@ XiangqiTeller.piecesCount = (map, color)=>{
     let row1 = 2 * row;
     let row2 = 2 * row + 1;
     for (let col = 0; col < 9; col++) {/** 棋盘只有9列 */
-      let p1 = XiangqiRules.piecesHash[XiangqiRules.piecesSets[map[row1][col]]];
+      let p1 = XiangqiRules.piecesBoard[map[row1][col]];
       if(p1 && p1.color == color){
         counter++;
       }
-      let p2 = XiangqiRules.piecesHash[XiangqiRules.piecesSets[map[row2][col]]];
+
+      let p2 = XiangqiRules.piecesBoard[map[row2][col]];
       if(p2 && p2.color == color){
         counter++;
       }

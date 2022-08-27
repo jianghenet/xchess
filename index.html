@@ -9,7 +9,12 @@
 <script> alert("对不起，您的浏览器不支持HTML5，请升级浏览器至IE9、firefox或者谷歌浏览器！")</script>
 < ![endif]-->
 <script>
-  const DeepClone = (arr) => JSON.parse(JSON.stringify(arr))
+  const DeepClone = (arr) => JSON.parse(JSON.stringify(arr));
+  jLibr = {
+    getEle: (id) => document.getElementById(id),
+    getDepth: () => document.querySelector("input[name='depth']:checked").value,
+    getClasli: () => document.querySelector("input[name='clasli']:checked").value,
+  }
 </script>
 <script src="js/xiangqi-rules.js"></script>
 <script src="js/xiangqi-teller.js"></script>

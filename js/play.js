@@ -100,7 +100,7 @@ play.manualPickup = (key, newX, newY) =>{
     play.nowManKey = key;
     com.dot.dots = piece.getWays(play.map);
     com.show();
-    com.getEle("selectAudio").play();
+    jLibr.getEle("selectAudio").play();
   }
 
 }
@@ -121,7 +121,7 @@ play.manualCapture = (attackerKey, oldX, oldY, targetKey, newX, newY) => {
     com.pane.isShow = false;
     com.dot.dots = [];
     com.show();
-    com.getEle("clickAudio").play();
+    jLibr.getEle("clickAudio").play();
     setTimeout(play.AIPlay, 500);
     if (targetKey == "j0") play.showWin(-1);
     if (targetKey == "J0") play.showWin(1);
@@ -141,7 +141,7 @@ play.manualClickPoint = function (attackerKey, oldX, oldY, newX, newY) {
       play.nowManKey = null;
       com.dot.dots = [];
       com.show();
-      com.getEle("clickAudio").play();
+      jLibr.getEle("clickAudio").play();
       setTimeout(play.AIPlay, 500);
     }
   }
@@ -151,7 +151,7 @@ play.manualClickPoint = function (attackerKey, oldX, oldY, newX, newY) {
 play.AIPlay = function () {
   //return
   play.my = -1;
-  var pace = AI.init();
+  var pace = AI.getGoodMove();
   if (!pace) {
     play.showWin(1);
     return;
@@ -164,7 +164,7 @@ play.AIPlay = function () {
   } else {
     play.AIclickPoint(attacker, pace[0], pace[1], pace[2], pace[3]);
   }
-  com.getEle("clickAudio").play();
+  jLibr.getEle("clickAudio").play();
 }
 
 //吃子
